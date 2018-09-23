@@ -30,7 +30,7 @@ body {
 <script>
 var scene, renderer, camera;
 var controls;
-var A, angle;
+var pointLight, angle;
 
 
 function model_A(){
@@ -163,14 +163,15 @@ function init() {
   camera.position.z = 500;
   camera.position.y = 500;
   controls = new THREE.OrbitControls(camera, renderer.domElement);
-  var pointLight = new THREE.PointLight(0xffffff);
 
-  
   var spotLight = new THREE.SpotLight( 0xffffff );
-  spotLight.position.set( 0, -30, 200 );
+  spotLight.position.set( 0, 0, -180 );
   scene.add( spotLight );
+
+  var light = new THREE.HemisphereLight( 0x444444, 0x444444, 1 );
+  scene.add( light );
   
-  A = model_A();
+  var A = model_A();
   A.position.set(-50, 0, 0);
   A.rotation.x = Math.PI;
   scene.add(A);
@@ -187,10 +188,6 @@ function onWindowResize() {
 }
 
 function animate() {
-  angle += 0.01;
-  A.rotation.x = angle;
-  A.rotation.z = angle;
-  A.rotation.y = angle;
   controls.update();
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
