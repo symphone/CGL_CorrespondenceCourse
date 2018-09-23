@@ -30,7 +30,7 @@ body {
 <script>
 var scene, renderer, camera;
 var controls;
-var mesh;
+var A, angle;
 
 
 function model_A(){
@@ -124,7 +124,7 @@ function model_A(){
   geometry.faceVertexUvs[0].push([st3, st0, st2_d12]);
   geometry.faceVertexUvs[0].push([st1_d2, st0, st2_d21]); //back
   geometry.faceVertexUvs[0].push([st3, st0, st2_d12]);
-  geometry.faceVertexUvs[0].push([st1_d2, st0, st2_d21]); //left*
+  geometry.faceVertexUvs[0].push([st1_d2, st0, st2_d21]); //left
   geometry.faceVertexUvs[0].push([st3_d2, st0, st2_d22]);
   geometry.faceVertexUvs[0].push([st1_d2, st0, st2_d22]); //right
   geometry.faceVertexUvs[0].push([st3, st0, st2_d12]);
@@ -139,277 +139,15 @@ function model_A(){
   loader.setCrossOrigin('');
   var texture = loader.load ( 'https://i.imgur.com/p8CRm9W.jpg' );
   texture.wrapS = texture.wrapT = THREE.WrapRepeating;
-  var mat = new THREE.MeshBasicMaterial({
+  var mat = new THREE.MeshLambertMaterial({
   	map: texture,
     side: THREE.DoubleSide
   });
-  
-  var materialArray = [];
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xffff00,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xffff00,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xffff00,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xffff00,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xffffff,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xffffff,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  
   geometry.computeBoundingSphere();
   geometry.computeFaceNormals();
   geometry.computeVertexNormals();
-  var material = new THREE.MeshFaceMaterial(materialArray);
   return new THREE.Mesh(geometry, mat);
 
-}
-function model_B(){
-	var geometry = new THREE.Geometry();
-  geometry.vertices.push(
-    new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(0, 15, 0),
-    new THREE.Vector3(45, 15, 0),
-    new THREE.Vector3(45, 0, 0),   //3
-    new THREE.Vector3(0, 0, 25),
-    new THREE.Vector3(0, 15, 25),
-    new THREE.Vector3(45, 15, 25),
-    new THREE.Vector3(45, 7.5, 25), //7
-    new THREE.Vector3(15, 0, 25),
-    new THREE.Vector3(15, 7.5, 25),
-    new THREE.Vector3(45, 7.5, 10),
-    new THREE.Vector3(45, 0, 10), //11
-    new THREE.Vector3(15, 15, 25),
-    new THREE.Vector3(15, 0, 0),
-    new THREE.Vector3(45, 15, 10)
-  );
-  
-  var face;
-  face = new THREE.Face3(0, 1, 2);
-  face.materialIndex = 0;
-  geometry.faces.push(face);
-  face = new THREE.Face3(0, 2, 3); //down
-  face.materialIndex = 1;
-  geometry.faces.push(face);
-  face = new THREE.Face3(4, 5, 12);
-  face.materialIndex = 2;
-  geometry.faces.push(face);
-  face = new THREE.Face3(4, 8, 12); //up1
-  face.materialIndex = 3;
-  geometry.faces.push(face);
-  face = new THREE.Face3(7, 9, 12);
-  face.materialIndex = 4;
-  geometry.faces.push(face);
-  face = new THREE.Face3(6, 7, 12); //up2
-  face.materialIndex = 5;
-  geometry.faces.push(face);
-  face = new THREE.Face3(0, 13, 8);
-  face.materialIndex = 6;
-  geometry.faces.push(face);
-  face = new THREE.Face3(0, 4, 8); //f1
-  face.materialIndex = 7;
-  geometry.faces.push(face);
-  face = new THREE.Face3(13, 3, 8);
-  face.materialIndex = 8;
-  geometry.faces.push(face);
-  face = new THREE.Face3(3, 8, 11); //f2
-  face.materialIndex = 9;
-  geometry.faces.push(face);
-  face = new THREE.Face3(1, 5, 6);
-  face.materialIndex = 10;
-  geometry.faces.push(face);
-  face = new THREE.Face3(6, 1, 2); //back
-  face.materialIndex = 11;
-  geometry.faces.push(face);
-  face = new THREE.Face3(0, 1, 5);
-  face.materialIndex = 12;
-  geometry.faces.push(face);
-  face = new THREE.Face3(0, 4, 5); //left
-  face.materialIndex = 13;
-  geometry.faces.push(face);
-  face = new THREE.Face3(6, 7, 14);
-  face.materialIndex = 14;
-  geometry.faces.push(face);
-  face = new THREE.Face3(7, 10, 14); //r1
-  face.materialIndex = 15;
-  geometry.faces.push(face);
-  face = new THREE.Face3(2, 3, 14);
-  face.materialIndex = 16;
-  geometry.faces.push(face);
-  face = new THREE.Face3(14, 3, 11); //r2
-  face.materialIndex = 17;
-  geometry.faces.push(face);
-  face = new THREE.Face3(8, 9, 10);
-  face.materialIndex = 18;
-  geometry.faces.push(face);
-  face = new THREE.Face3(8, 10, 11); //±×
-  face.materialIndex = 19;
-  geometry.faces.push(face);
-  face = new THREE.Face3(7, 9, 10);
-  face.materialIndex = 20;
-  geometry.faces.push(face);
-  
-
-  geometry.computeBoundingSphere();
-  geometry.computeFaceNormals();
-  geometry.computeVertexNormals();
-
-  
-  var materialArray = [];
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xffff00,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xffff00,
-    side: THREE.DoubleSide
-  }));
-  materialArray.push(new THREE.MeshBasicMaterial({
-    color: 0x0000ff,
-    side: THREE.DoubleSide
-  }));
-  
-  var loader = new THREE.TextureLoader();
-  var texture = loader.load ( 'https://i.imgur.com/p8CRm9W.jpg' );
-  texture.wrapS = texture.wrapT = THREE.WrapRepeating;
-  var mat = new THREE.MeshBasicMaterial({
-  	map: texture
-  });
-  var material = new THREE.MeshFaceMaterial(materialArray);
-  return new THREE.Mesh(geometry, material);
 }
 init();
 animate();
@@ -427,18 +165,16 @@ function init() {
   controls = new THREE.OrbitControls(camera, renderer.domElement);
   var pointLight = new THREE.PointLight(0xffffff);
 
-  pointLight.position.set(500, 1300, 1400);
-  scene.add(pointLight);
-  var ambientLight = new THREE.AmbientLight(0x111111);
-  scene.add(ambientLight);
-
   
-  var t1 = model_A();
-  t1.position.set(-50, 0, 0);
-  t1.rotation.x = Math.PI;
-  scene.add(t1);
-  //var t2 = model_B();
-  //scene.add(t2);
+  var spotLight = new THREE.SpotLight( 0xffffff );
+  spotLight.position.set( 0, -30, 200 );
+  scene.add( spotLight );
+  
+  A = model_A();
+  A.position.set(-50, 0, 0);
+  A.rotation.x = Math.PI;
+  scene.add(A);
+  angle = 0;
   
 
   window.addEventListener('resize', onWindowResize, false);
@@ -451,6 +187,10 @@ function onWindowResize() {
 }
 
 function animate() {
+  angle += 0.01;
+  A.rotation.x = angle;
+  A.rotation.z = angle;
+  A.rotation.y = angle;
   controls.update();
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
