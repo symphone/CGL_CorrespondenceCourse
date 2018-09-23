@@ -139,7 +139,7 @@ function model_A(){
   loader.setCrossOrigin('');
   var texture = loader.load ( 'https://i.imgur.com/p8CRm9W.jpg' );
   texture.wrapS = texture.wrapT = THREE.WrapRepeating;
-  var mat = new THREE.MeshLambertMaterial({
+  var mat = new THREE.MeshPhongMaterial({
   	map: texture,
     side: THREE.DoubleSide
   });
