@@ -196,7 +196,6 @@ function init() {
   
   B2 = model_boxHole();
   B2.rotation.x = Math.PI / 4;
-  B2.position.y = 45;
   scene.add(B2);
   
 
@@ -224,7 +223,7 @@ scene.add( directionalLight );
   light.shadow.mapSize.width = 1024;
   light.shadow.mapSize.height = 1024;
   light.shadow.camera.near = 10;
-  light.shadow.camera.far = 200;
+  light.shadow.camera.far = 300;
   light.shadow.camera.fov = light.angle / Math.PI * 180 * 2;
   light.shadow.bias = -0.01;
   
@@ -243,8 +242,8 @@ scene.add( directionalLight );
 
 function animate() {
 	angle -= 0.01;
-  B2.position.set(100 * Math.cos(angle), 50, 100 * Math.sin(angle));
-  B2.rotation.y = -angle;
+  B2.position.set(100 * Math.cos(angle), 80, 100 * Math.sin(angle));
+  B2.rotation.z = -angle;
 
   requestAnimationFrame(animate);
   render();
