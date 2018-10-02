@@ -138,61 +138,34 @@ function model_A(){
 
 }
 
-function model_B2(){
-	let loader = new THREE.TextureLoader();
-  loader.crossOrigin = '';
-  var texture = loader.load('https://i.imgur.com/DrvlmNW.jpg');
-  var texture2 = loader.load('https://i.imgur.com/DrvlmNW.jpg');
-  var texture3 = loader.load('https://i.imgur.com/DrvlmNW.jpg');
-  var alpha = loader.load('https://i.imgur.com/pYpcBHY.png');
-  texture.repeat.set(1/3, 1);
-  texture2.repeat.set(1, 1/3);
-  texture3.repeat.set(1, 1);
-  let matArray = [];
-  matArray.push(new THREE.MeshPhongMaterial({
-  	map: texture,
-    side: THREE.DoubleSide
-  }));
-  matArray.push(new THREE.MeshPhongMaterial({
-  	map: texture,
-    side: THREE.DoubleSide
-  }));
-  matArray.push(new THREE.MeshPhongMaterial({
-  	map: texture2,
-    side: THREE.DoubleSide
-  }));
-  matArray.push(new THREE.MeshPhongMaterial({
-  	map: texture2,
-    side: THREE.DoubleSide
-  }));
-  matArray.push(new THREE.MeshPhongMaterial({
-  	map: texture3,
-    alphaMap: alpha,
-    transparent: true,
-    side: THREE.DoubleSide
-  }));
-  matArray.push(new THREE.MeshPhongMaterial({
-  	map: texture3,
-    alphaMap: alpha,
-    transparent: true,
-    side: THREE.DoubleSide
-  }));
-  var mulMat = new THREE.MultiMaterial(matArray);
-
-  let cylin = new THREE.Mesh(new THREE.CylinderGeometry(10, 10, 20, 32, 2, true), new THREE.MeshPhongMaterial({
-  	map: texture3,
-    side: THREE.BackSide
-  }));
-  cylin.rotation.x = Math.PI / 2;
-  let box = new THREE.Mesh(new THREE.BoxGeometry(60, 60, 20), mulMat);
+function model_boxHole(){
+	var boxModel = new THREE.Shape();
+  boxModel.moveTo(-30, 30);
+  boxModel.lineTo(-30, -30);
+  boxModel.lineTo(30, -30);
+  boxModel.lineTo(30, 30);
+  boxModel.lineTo(-30, 30);
   
-  var wood_hole = new THREE.Object3D();
-  wood_hole.add(box, cylin);
-  
-  return box;
-
+  var hole = new THREE.Path();
+  hole.moveTo(0, 0);
+  hole.absarc(0, 0, 10, 0, Math.PI * 2, false);
+  boxModel.holes.push(hole)
+  var extrudeSettings = {
+    steps: 2,
+    depth: 20,
+    bevelEnabled: false,
+    bevelThickness: 1,
+    bevelSize: 1,
+    bevelSegments: 1
+  };
+  var boxGeo = new THREE.ExtrudeGeometry(boxModel, extrudeSettings);
+  var loader = new THREE.TextureLoader();
+  loader.setCrossOrigin('');
+  var texture = loader.load ( 'https://i.imgur.com/p8CRm9W.jpg' );
+  texture.wrapS = texture.wrapT = THREE.WrapRepeating;
+  texture.repeat.set(1/30, 1/30);
+  return new THREE.Mesh(boxGeo, new THREE.MeshPhongMaterial({map: texture}));
 }
-
 function init() {
 
   scene = new THREE.Scene();
@@ -221,7 +194,7 @@ function init() {
   A.position.z = 25;
   scene.add(A);
   
-  B2 = model_B2();
+  B2 = model_boxHole();
   B2.rotation.x = Math.PI / 4;
   B2.position.y = 45;
   scene.add(B2);
